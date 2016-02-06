@@ -4,6 +4,7 @@ module ApiableModelErrors
 
   def self.included(base)
     base.alias_method_chain :add, :api_errors
+    base.alias_method_chain :clear, :api_errors
   end
 
   def to_api_hash
@@ -26,6 +27,12 @@ module ApiableModelErrors
 
   def errors_for_api
     @errors_for_api ||= {}
+  end
+
+  def clear_with_api_errors
+    clear_without_api_errors.tap do
+      @errors_for_api = {}
+    end
   end
 
   def add_with_api_errors(attribute, message = :invalid, options = {})

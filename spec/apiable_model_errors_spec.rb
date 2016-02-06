@@ -67,6 +67,18 @@ describe ApiableModelErrors do
     end
   end
 
+  context "#clear" do
+    it "should clear API errors" do
+      errors = ActiveModel::Errors.new(ExampleClass.new)
+      errors.add :example, :blank
+      expect(errors.messages).to_not be_empty
+      expect(errors.errors_for_api).to_not be_empty
+      errors.clear
+      expect(errors.messages).to be_empty
+      expect(errors.errors_for_api).to be_empty
+    end
+  end
+
   context "with presence validator" do
     class PresenceExampleClass < ExampleClass
       validates :example, :presence => true
