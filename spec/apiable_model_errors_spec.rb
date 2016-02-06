@@ -18,6 +18,26 @@ describe ApiableModelErrors do
     end
   end
 
+  context "#clear" do
+    it "should clear API errors" do
+      errors = ActiveModel::Errors.new(ExampleClass.new)
+      errors.add :example, :blank
+      expect(errors.messages).to_not be_empty
+      expect(errors.errors_for_api).to_not be_empty
+      errors.clear
+      expect(errors.messages).to be_empty
+      expect(errors.errors_for_api).to be_empty
+    end
+  end
+
+  context "#delete" do
+    it "should delete a given API error" do
+      errors = ActiveModel::Errors.new(ExampleClass.new)
+      errors.add :example, :blank
+      expect {errors.delete(:example)}.to change {errors.errors_for_api.has_key?(:example)}.from(true).to(false)
+    end
+  end
+
   context "#to_api_hash" do
     subject(:errors) do
       errors = ActiveModel::Errors.new(ExampleClass.new)
@@ -64,18 +84,6 @@ describe ApiableModelErrors do
       expect(errors.has_message?(:example, :too_long)).to be true
       expect(errors.has_message?(:example, :too_long, :count => 4)).to be true
       expect(errors.has_message?(:example, :too_long, :count => 3)).to be false
-    end
-  end
-
-  context "#clear" do
-    it "should clear API errors" do
-      errors = ActiveModel::Errors.new(ExampleClass.new)
-      errors.add :example, :blank
-      expect(errors.messages).to_not be_empty
-      expect(errors.errors_for_api).to_not be_empty
-      errors.clear
-      expect(errors.messages).to be_empty
-      expect(errors.errors_for_api).to be_empty
     end
   end
 
