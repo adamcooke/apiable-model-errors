@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "apiable_model_errors"
-  s.version     = Moonrope::VERSION
+  s.version     = "1.0.0"
   s.authors     = ["Adam Cooke"]
   s.email       = ["adam@atechmedia.com"]
   s.homepage    = "http://adamcooke.io"
