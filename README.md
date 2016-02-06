@@ -5,7 +5,8 @@ for models. It easily allows you to add any validation message to
 any attribute however these arbitary strings aren't very helpful
 if you want to deliver validation errors to APIs. API developers
 don't want to see `Number is too long (maximum is 5 characters)`,
-they would much rather see something they can handle internally.
+they would much rather see something they can handle programatically
+like `too_long` or `blank`.
 
 This gem extends the `ActiveModel::Errors` class to allow for a
 more API-friendly hash of errors to be returned.
